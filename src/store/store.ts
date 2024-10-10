@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { drawerSlice,sessionSlice } from './slices'
+import { drawerSlice,sessionSlice,toastSlice } from './slices'
 
 export const store = configureStore({
 	reducer: {
 		session: sessionSlice,
-		drawer: drawerSlice
+		drawer: drawerSlice,
+		toast: toastSlice
 	},
 })
 

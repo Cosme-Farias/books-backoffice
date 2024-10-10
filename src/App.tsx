@@ -8,6 +8,8 @@ import { LoginPage } from './pages/LoginPage/LoginPage';
 import { RegisterPage } from './pages/RegisterPage/RegisterPage';
 import { ReduxProvider } from './store/ReduxProvider';
 import { NotFoundPage } from './pages/NotFound';
+import { UsersPage } from './pages/UsersPage';
+import { CreateUserPage } from './pages/CreateUserPage';
 
 function App() {
     return (
@@ -16,6 +18,9 @@ function App() {
                 <Routes>
                     <Route path="/" element={<DashboardPage />} />
                     <Route path="/login" element={<LoginPage />} />
+                    <Route path="/users" element={<UsersPage />} />
+                    <Route path="/users/:id" element={<CreateUserPage />} />
+
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/books" element={<BooksPage />} />
                     <Route path="/books/:id" element={<CreateBookPage />} />

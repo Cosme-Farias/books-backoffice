@@ -26,7 +26,7 @@ export const CreateBookPage = () => {
 
     return (
         <PageContainer title="Agregar libro">
-            <form className="flex flex-col gap-4">
+            <form className="flex flex-col gap-4 overflow-auto">
                 <InputField
                     id="ISBN"
                     label="ISBN"

@@ -13,7 +13,9 @@ export const Sidebar = () => {
     return (
         <>
             <MobileMenu menuItems={menuItems} />
-            <aside className={`${'w-72'}  min-w-20    bg-white z-50 h-full  flex-col transition-all hidden md:flex`}>
+            <aside
+                className={`fixed left-0 md:flex md:w-44 lg:w-56 xl:w-72 bg-white z-50 h-full  flex-col transition-all hidden `}
+            >
                 <div
                     className={`flex w-full justify-center items-center h-20 bg-gradient-to-r from-purple-500 to-pink-500 ${'px-4'} transition-all`}
                 >

@@ -5,7 +5,9 @@ type Colors = 'purple' | 'pink' | 'red' | 'blue';
 interface Props {
     title: string;
     onClick: () => any;
-    Icon: React.ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>>;
+    disabled?: boolean;
+    Icon?: React.ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>>;
+    type?: 'button' | 'submit' | 'reset' | undefined;
     loading?: boolean;
     primaryColor?: Colors;
     secondaryColor?: Colors;
@@ -15,6 +17,7 @@ export const PrettyButton = ({
     onClick,
     title,
     loading,
+    type = 'button',
     primaryColor = 'purple',
     secondaryColor = 'pink',
 }: Props) => {
@@ -59,7 +62,7 @@ export const PrettyButton = ({
     return (
         <div>
             <button
-                type="button"
+                type={type}
                 onClick={onClick}
                 className={`w-full bg-gradient-to-r relative flex items-center justify-center px-6 py-3 overflow-hidden text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 ${
                     primaryClasses.focus
@@ -79,8 +82,8 @@ export const PrettyButton = ({
                         className={`absolute inset-0 bg-gradient-to-r ${primaryClasses.loadingFrom} ${secondaryClasses.loadingTo} transition-opacity duration-300 ease-in-out`}
                     ></span>
                 )}
-                <Icon className="relative z-10 w-5 h-5 mr-2" />
-                <span className="relative z-10">{title}</span>
+                {Icon && <Icon className="relative z-10 w-5 h-5 mr-2 pointer-events-none" />}
+                <span className="relative z-10 pointer-events-none">{title}</span>
             </button>
         </div>
     );

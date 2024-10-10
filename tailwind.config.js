@@ -15,6 +15,9 @@ export default {
             padding: {
                 18: '4.5rem',
             },
+            gridTemplateRows: {
+                16: 'repeat(16, minmax(0, 1fr))',
+            },
         },
     },
     plugins: [],
