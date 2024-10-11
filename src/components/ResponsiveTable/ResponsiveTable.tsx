@@ -10,6 +10,7 @@ interface Props<T> {
     handleElementsPerPage: (number: number) => void;
     headers?: string[];
     actions?: Actions[];
+    loading?: boolean;
 }
 type Actions = 'edit' | 'delete' | 'other';
 
@@ -23,6 +24,7 @@ export const ResponsiveTable = <T extends {}>({
     handleElementsPerPage,
     handlePage,
     page,
+    loading,
 }: Props<T>) => {
     console.log({ count, elementsPerPage });
     return (
@@ -49,73 +51,102 @@ export const ResponsiveTable = <T extends {}>({
                             )}
                         </tr>
                     </thead>
-                    <tbody className="h-full bg-lime-200">
-                        {elements.map((element, index) => (
-                            <tr key={index}>
-                                {entries.map((entry) => (
-                                    <td
-                                        key={String(entry)}
-                                        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                                    >
-                                        {element[entry] !== undefined && element[entry] !== null
-                                            ? String(element[entry])
-                                            : '-'}
-                                    </td>
-                                ))}
-                                {actions && (
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <div className="flex items-center space-x-4">
-                                            {actions.map((action) => {
-                                                if (action === 'edit') {
-                                                    return (
-                                                        <button
-                                                            key="edit"
-                                                            className="text-blue-500 hover:text-blue-600"
-                                                            onClick={() => {}}
-                                                        >
-                                                            <Edit size={18} />
-                                                        </button>
-                                                    );
-                                                }
-                                                if (action === 'delete') {
-                                                    return (
-                                                        <button
-                                                            key="delete"
-                                                            className="text-red-500 hover:text-red-600"
-                                                            onClick={() => {
-                                                                /* lógica para eliminar */
-                                                            }}
-                                                        >
-                                                            <Trash2 size={18} />
-                                                        </button>
-                                                    );
-                                                }
-                                                if (action === 'other') {
-                                                    return (
-                                                        <button
-                                                            key="other"
-                                                            className="text-gray-500 hover:text-gray-600"
-                                                            onClick={() => {
-                                                                /* lógica para otra acción */
-                                                            }}
-                                                        >
-                                                            <MoreVertical size={18} />
-                                                        </button>
-                                                    );
-                                                }
-                                            })}
-                                        </div>
-                                    </td>
-                                )}
-                            </tr>
-                        ))}
+                    <tbody className="h-full">
+                        {loading ? (
+                            <div></div>
+                        ) : (
+                            // ? Array(elementsPerPage < 5 ? elementsPerPage : 5)
+                            //       .fill(null)
+                            //       .map((_, index) => (
+                            //           <tr key={index}>
+                            //               <td className="px-6 py-4 whitespace-nowrap">
+                            //                   <div className="h-4 w-8 bg-gray-200 rounded animate-pulse"></div>
+                            //               </td>
+                            //               <td className="px-6 py-4 whitespace-nowrap">
+                            //                   <div className="h-4 w-8 bg-gray-200 rounded animate-pulse"></div>
+                            //               </td>
+                            //               <td className="px-6 py-4 whitespace-nowrap">
+                            //                   <div className="h-4 w-40 bg-gray-200 rounded animate-pulse"></div>
+                            //               </td>
+                            //               <td className="px-6 py-4 whitespace-nowrap">
+                            //                   <div className="h-4 w-24 bg-gray-200 rounded animate-pulse"></div>
+                            //               </td>
+                            //               <td className="px-6 py-4 whitespace-nowrap">
+                            //                   <div className="h-4 w-24 bg-gray-200 rounded animate-pulse"></div>
+                            //               </td>
+                            //           </tr>
+                            //       ))
+                            elements.map((element, index) => (
+                                <tr key={index}>
+                                    {entries.map((entry) => (
+                                        <td
+                                            key={String(entry)}
+                                            className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                                        >
+                                            {element[entry] !== undefined && element[entry] !== null
+                                                ? String(element[entry])
+                                                : '-'}
+                                        </td>
+                                    ))}
+                                    {actions && (
+                                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                            <div className="flex items-center space-x-4">
+                                                {actions.map((action) => {
+                                                    if (action === 'edit') {
+                                                        return (
+                                                            <button
+                                                                key="edit"
+                                                                className="text-blue-500 hover:text-blue-600"
+                                                                onClick={() => {}}
+                                                            >
+                                                                <Edit size={18} />
+                                                            </button>
+                                                        );
+                                                    }
+                                                    if (action === 'delete') {
+                                                        return (
+                                                            <button
+                                                                key="delete"
+                                                                className="text-red-500 hover:text-red-600"
+                                                                onClick={() => {
+                                                                    /* lógica para eliminar */
+                                                                }}
+                                                            >
+                                                                <Trash2 size={18} />
+                                                            </button>
+                                                        );
+                                                    }
+                                                    if (action === 'other') {
+                                                        return (
+                                                            <button
+                                                                key="other"
+                                                                className="text-gray-500 hover:text-gray-600"
+                                                                onClick={() => {
+                                                                    /* lógica para otra acción */
+                                                                }}
+                                                            >
+                                                                <MoreVertical size={18} />
+                                                            </button>
+                                                        );
+                                                    }
+                                                })}
+                                            </div>
+                                        </td>
+                                    )}
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
-            <div className="h-20 bg-white border-t grid grid-cols-12 xs:flex-row items-center xs:justify-between px-5">
-                <span className="col-span-2 text-xs xs:text-sm text-gray-900">{`Mostrando ${
-                    count === 0 ? 0 : page * elementsPerPage - elementsPerPage + 1
-                } a ${count > page * elementsPerPage ? page * elementsPerPage : count} de ${count} resultados`}</span>
+            <div className="h-20 shadow-md rounded-md bg-white border-t grid grid-cols-12 xs:flex-row items-center xs:justify-between px-5">
+                <span className="col-span-2 text-xs xs:text-sm text-gray-900">
+                    {`${count === 0 ? 0 : (page - 1) * elementsPerPage + 1} - ${Math.min(
+                        count,
+                        page * elementsPerPage
+                    )} de ${count} resultados`}
+                </span>
+
                 <div className="col-span-8 gap-4 flex justify-center items-center">
                     <div className="flex gap-2">
                         <button

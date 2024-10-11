@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { createUser } from '@/services/models/users';
 
 export const CreateUserPage = () => {
-    const [user, setUser] = useState<NewUser>({ firstName: '', lastName: '', email: '', role: 'Admin' });
+    const [user, setUser] = useState<NewUser>({ firstName: '', lastName: '', email: '', role: UserTypes.ADMIN });
     const [created, setCreated] = useState(false);
     const [loading, setLoading] = useState(false);
     const dispatch = useAppDispatch();
@@ -42,7 +42,7 @@ export const CreateUserPage = () => {
     };
 
     const reset = () => {
-        setUser({ email: '', firstName: '', lastName: '', role: 'Admin' });
+        setUser({ email: '', firstName: '', lastName: '', role: UserTypes.ADMIN });
         setCreated(false);
     };
 

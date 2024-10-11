@@ -1,6 +1,5 @@
-import { SearchUsersQuery } from "@/interfaces/user.interface"
 import { fetchUsers } from "@/services/models/users"
-import { User } from "@/types/user"
+import { SearchUsersQuery,User } from "@/types/user"
 import { handleError } from "@/utils/errorHandler"
 import { useEffect,useState } from "react"
 
@@ -9,7 +8,7 @@ import { useEffect,useState } from "react"
 const defaultSearchUsersQuery: SearchUsersQuery = {
 	page: 1,
 	elementsPerPage: 1,
-	search: ""
+	filters: { search: "",role: "" }
 }
 
 

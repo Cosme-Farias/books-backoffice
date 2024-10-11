@@ -2,13 +2,14 @@ import { InputField } from '@/components/InputField';
 import { PageContainer } from '@/components/PageContainer';
 import { ResponsiveTable } from '@/components/ResponsiveTable/ResponsiveTable';
 import { useUsers } from '@/hooks/useUsers';
+import { Role, UserTypes } from '@/types/user';
 import { Search } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export const UsersPage = () => {
     const [search, setSearch] = useState('');
-    const [rol, setRol] = useState('');
+    const [role, setRole] = useState<Role | ''>('');
 
     const { count, elements, error, loading, refetch } = useUsers();
 
@@ -19,13 +20,34 @@ export const UsersPage = () => {
         if (page > Math.ceil(count / elementsPerPage)) return;
         if (page <= 0) return;
         setPage(page);
-        refetch({ page, search, elementsPerPage });
+        triggerRefetch({ newPage: page });
     };
 
     const handleElementsPerPage = (elements: number) => {
         setElementsPerPage(elements);
         setPage(1);
-        refetch({ page, search, elementsPerPage: elements });
+        triggerRefetch({ newPage: 1, newElementsPerPage: elements });
+    };
+
+    const handleSearch = (value: string) => {
+        setSearch(value);
+        setPage(1);
+        triggerRefetch({ newPage: 1, newSearch: value });
+    };
+
+    const handleRole = (role: Role) => {
+        setRole(role);
+        setPage(1);
+        triggerRefetch({ newPage: 1, newRole: role });
+    };
+
+    const triggerRefetch = ({
+        newPage = page,
+        newElementsPerPage = elementsPerPage,
+        newSearch = search,
+        newRole = role,
+    }) => {
+        refetch({ elementsPerPage: newElementsPerPage, page: newPage, filters: { search: newSearch, role: newRole } });
     };
 
     return (
@@ -37,11 +59,7 @@ export const UsersPage = () => {
                         <div className="relative">
                             <InputField
                                 id="search"
-                                onChange={(e) => {
-                                    setSearch(e.target.value);
-                                    setPage(1);
-                                    refetch({ elementsPerPage, page, search: e.target.value });
-                                }}
+                                onChange={(e) => handleSearch(e.target.value)}
                                 placeholder="Buscar usuario..."
                                 type="text"
                                 value={search}
@@ -54,22 +72,19 @@ export const UsersPage = () => {
                     <div className="relative col-span-2">
                         <select
                             className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 
-								${!rol && 'text-gray-400'}
+								${!role && 'text-gray-400'}
 								`}
-                            value={rol}
-                            onChange={(e) => {
-                                setRol(e.target.value);
-                                console.log(e.target.value);
-                            }}
+                            value={role}
+                            onChange={(e) => handleRole(e.target.value as Role)}
                         >
                             <option value={''} className="text-gray-400">
                                 Filtrar por rol
                             </option>
-                            <option className="text-gray-800" value={'Admin'}>
+                            <option className="text-gray-800" value={UserTypes.ADMIN}>
                                 Admin
                             </option>
-                            <option className="text-gray-800" value={'User'}>
-                                User
+                            <option className="text-gray-800" value={UserTypes.PANEL}>
+                                Panel
                             </option>
                         </select>
                     </div>
@@ -81,6 +96,7 @@ export const UsersPage = () => {
                         </button>
                     </Link>
                 </div>
+                {/* TABLE */}
                 <ResponsiveTable
                     elements={elements}
                     count={count}
@@ -91,6 +107,7 @@ export const UsersPage = () => {
                     handleElementsPerPage={handleElementsPerPage}
                     handlePage={handlePage}
                     page={page}
+                    loading={loading}
                 />
             </div>
         </PageContainer>

@@ -3,9 +3,8 @@
 // import { api } from "../api";
 
 import { USERS_URL } from "@/config/constants"
-import { NewUser,User } from "@/types/user"
+import { NewUser,SearchUsersQuery,User } from "@/types/user"
 import { api } from "../api"
-import { SearchUsersQuery } from "@/interfaces/user.interface"
 
 interface FetchUsersResponse {
 	elements: User[]

@@ -21,5 +21,10 @@ export enum UserTypes {
 	ADMIN = "Admin",
 	PANEL = "Panel"
 }
+export type Role = UserTypes
 
-type Role = "Admin" | "Panel"
+export interface SearchUsersQuery {
+	page: number
+	elementsPerPage: number
+	filters: { search: string,role: Role | "" }
+}
