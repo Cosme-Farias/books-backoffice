@@ -1,7 +1,17 @@
+import { SearchUsersQuery } from "@/interfaces/user.interface"
 import { fetchUsers } from "@/services/models/users"
 import { User } from "@/types/user"
 import { handleError } from "@/utils/errorHandler"
 import { useEffect,useState } from "react"
+
+
+
+const defaultSearchUsersQuery: SearchUsersQuery = {
+	page: 1,
+	elementsPerPage: 1,
+	search: ""
+}
+
 
 const useUsers = () => {
 	const [elements,setElements] = useState<User[]>([])
@@ -9,11 +19,11 @@ const useUsers = () => {
 	const [loading,setLoading] = useState(false)
 	const [error,setError] = useState("")
 
-	const refetch = async () => {
+	const refetch = async (query: SearchUsersQuery = defaultSearchUsersQuery) => {
 		try {
 			setLoading(true)
 
-			const { count,elements } = await fetchUsers()
+			const { count,elements } = await fetchUsers(query)
 
 			setElements(elements)
 			setCount(count)

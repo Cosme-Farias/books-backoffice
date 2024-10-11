@@ -8,3 +8,9 @@ export interface Book {
 	pages: number | ""
 	_id?: string
 }
+
+export interface SearchBooksQuery {
+	page: number
+	elementsPerPage: number
+	search: string
+}

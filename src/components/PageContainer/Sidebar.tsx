@@ -1,5 +1,5 @@
 import { BookText, Home, LogOut, Settings, Users } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { MobileMenu } from './MobileMenu';
 
 export const Sidebar = () => {
@@ -19,9 +19,11 @@ export const Sidebar = () => {
                 <div
                     className={`flex w-full justify-center items-center h-20 bg-gradient-to-r from-purple-500 to-pink-500 ${'px-4'} transition-all`}
                 >
-                    <h1 className={`w-48 text-2xl font-bold text-white text-left transition-all overflow-hidden`}>
-                        Books
-                    </h1>
+                    <Link to={'/'}>
+                        <h1 className={`w-48 text-2xl font-bold text-white text-left transition-all overflow-hidden`}>
+                            Books
+                        </h1>
+                    </Link>
                 </div>
 
                 {/* Navigation */}

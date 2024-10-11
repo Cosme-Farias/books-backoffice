@@ -114,7 +114,7 @@ export const ResponsiveTable = <T extends {}>({
             </div>
             <div className="h-20 bg-white border-t grid grid-cols-12 xs:flex-row items-center xs:justify-between px-5">
                 <span className="col-span-2 text-xs xs:text-sm text-gray-900">{`Mostrando ${
-                    page * elementsPerPage - elementsPerPage + 1
+                    count === 0 ? 0 : page * elementsPerPage - elementsPerPage + 1
                 } a ${count > page * elementsPerPage ? page * elementsPerPage : count} de ${count} resultados`}</span>
                 <div className="col-span-8 gap-4 flex justify-center items-center">
                     <div className="flex gap-2">

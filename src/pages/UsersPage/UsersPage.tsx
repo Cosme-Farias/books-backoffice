@@ -2,7 +2,7 @@ import { InputField } from '@/components/InputField';
 import { PageContainer } from '@/components/PageContainer';
 import { ResponsiveTable } from '@/components/ResponsiveTable/ResponsiveTable';
 import { useUsers } from '@/hooks/useUsers';
-import { Edit, MoreVertical, Search, Trash2 } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -19,11 +19,13 @@ export const UsersPage = () => {
         if (page > Math.ceil(count / elementsPerPage)) return;
         if (page <= 0) return;
         setPage(page);
+        refetch({ page, search, elementsPerPage });
     };
 
     const handleElementsPerPage = (elements: number) => {
         setElementsPerPage(elements);
         setPage(1);
+        refetch({ page, search, elementsPerPage: elements });
     };
 
     return (
@@ -35,7 +37,11 @@ export const UsersPage = () => {
                         <div className="relative">
                             <InputField
                                 id="search"
-                                onChange={(e) => setSearch(e.target.value)}
+                                onChange={(e) => {
+                                    setSearch(e.target.value);
+                                    setPage(1);
+                                    refetch({ elementsPerPage, page, search: e.target.value });
+                                }}
                                 placeholder="Buscar usuario..."
                                 type="text"
                                 value={search}
@@ -79,8 +85,8 @@ export const UsersPage = () => {
                     elements={elements}
                     count={count}
                     entries={['firstName', 'lastName', 'email', 'role']}
-                    actions={['edit', 'delete', 'other']}
                     headers={['Nombre', 'Apellido', 'Email', 'Rol']}
+                    actions={['edit', 'delete', 'other']}
                     elementsPerPage={elementsPerPage}
                     handleElementsPerPage={handleElementsPerPage}
                     handlePage={handlePage}

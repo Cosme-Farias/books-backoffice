@@ -17,4 +17,9 @@ export interface User {
 	createdAt?: string
 }
 
-type Role = "admin" | "panel"
+export enum UserTypes {
+	ADMIN = "Admin",
+	PANEL = "Panel"
+}
+
+type Role = "Admin" | "Panel"

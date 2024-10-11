@@ -5,15 +5,16 @@
 import { USERS_URL } from "@/config/constants"
 import { NewUser,User } from "@/types/user"
 import { api } from "../api"
+import { SearchUsersQuery } from "@/interfaces/user.interface"
 
 interface FetchUsersResponse {
 	elements: User[]
 	count: number
 }
 
-const fetchUsers = async (): Promise<FetchUsersResponse> => {
+const fetchUsers = async (query: SearchUsersQuery): Promise<FetchUsersResponse> => {
 	try {
-		const response = await api.get<FetchUsersResponse>(USERS_URL)
+		const response = await api.get<FetchUsersResponse>(USERS_URL,{ params: query })
 		console.log(response)
 		return response.data
 	} catch (error) {

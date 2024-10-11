@@ -3,7 +3,7 @@ import { PageContainer } from '@/components/PageContainer';
 import { PrettyButton } from '@/components/PrettyButton';
 import { useAppDispatch } from '@/store/hooks';
 import { closeToast, showToast } from '@/store/slices/toastSlice';
-import { NewUser } from '@/types/user';
+import { NewUser, UserTypes } from '@/types/user';
 import { handleError } from '@/utils/errorHandler';
 import { Download, X } from 'lucide-react';
 import { useState } from 'react';
@@ -12,14 +12,13 @@ import { useNavigate } from 'react-router-dom';
 import { createUser } from '@/services/models/users';
 
 export const CreateUserPage = () => {
-    const [user, setUser] = useState<NewUser>({ firstName: '', lastName: '', email: '', role: 'admin' });
+    const [user, setUser] = useState<NewUser>({ firstName: '', lastName: '', email: '', role: 'Admin' });
     const [created, setCreated] = useState(false);
     const [loading, setLoading] = useState(false);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const editUser = (key: keyof NewUser, value: NewUser[keyof NewUser]) => {
-        console.log(value);
         setUser((prev) => ({ ...prev, [key]: value }));
     };
 
@@ -43,7 +42,7 @@ export const CreateUserPage = () => {
     };
 
     const reset = () => {
-        setUser({ email: '', firstName: '', lastName: '', role: 'admin' });
+        setUser({ email: '', firstName: '', lastName: '', role: 'Admin' });
         setCreated(false);
     };
 
@@ -123,10 +122,10 @@ export const CreateUserPage = () => {
                                 editUser('role', e.target.value);
                             }}
                         >
-                            <option className="text-gray-800" value={'admin'}>
+                            <option className="text-gray-800" value={UserTypes.ADMIN}>
                                 Admin
                             </option>
-                            <option className="text-gray-800" value={'panel'}>
+                            <option className="text-gray-800" value={UserTypes.PANEL}>
                                 Panel
                             </option>
                         </select>
