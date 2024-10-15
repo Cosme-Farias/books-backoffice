@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { closeToast } from '@/store/slices/toastSlice';
 import { AlertCircle, AlertTriangle, CheckCircle, Info, X } from 'lucide-react';
+import { useEffect } from 'react';
 
 type ToastType = 'success' | 'error' | 'warning' | 'info';
 
@@ -21,6 +22,16 @@ const bgColors: Record<ToastType, string> = {
 export function ToastNotification() {
     const { isVisible, message, type } = useAppSelector((state) => state.toast);
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (isVisible) {
+            const timer = setTimeout(() => {
+                dispatch(closeToast());
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [isVisible, dispatch]);
 
     return (
         <div

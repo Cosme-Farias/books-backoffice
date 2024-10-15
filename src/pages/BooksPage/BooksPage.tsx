@@ -4,8 +4,10 @@ import { ResponsiveTable } from '@/components/ResponsiveTable/ResponsiveTable';
 import { useBooks } from '@/hooks/useBooks';
 import { Book } from '@/interfaces/book.interface';
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const BooksPage = () => {
+    const navigate = useNavigate();
     const { elements, count, refetch } = useBooks();
 
     const [modal, setModal] = useState(false);
@@ -31,12 +33,22 @@ export const BooksPage = () => {
         refetch();
     };
 
+    const onEdit = (book: Book) => {
+        navigate(`/books/${book._id}`);
+    };
+
     return (
         <PageContainer title="Listado de libros">
             <div className="flex flex-col h-full w-full max-w-7xl mx-auto gap-4  bg-gray-100">
-                {/* <button onClick={() => setModal(true)} className="p-4 bg-pink-500 text-white">
-                    crear libro
-                </button> */}
+                <div className="grid grid-cols-8 gap-2">
+                    <Link to={'/books/new'} className="col-start-7 col-span-2 ">
+                        <button
+                            className={`h-full w-full flex justify-center items-center py-2 px-4 rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 bg-purple-500`}
+                        >
+                            Crear
+                        </button>
+                    </Link>
+                </div>
                 <ResponsiveTable
                     elements={elements}
                     count={count}
@@ -47,6 +59,7 @@ export const BooksPage = () => {
                     handlePage={handlePage}
                     elementsPerPage={elementsPerPage}
                     handleElementsPerPage={handleElementsPerPage}
+                    action1={onEdit}
                 />
 
                 {modal && (

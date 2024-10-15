@@ -11,6 +11,7 @@ interface Props<T> {
     headers?: string[];
     actions?: Actions[];
     loading?: boolean;
+    action1?: (element: T) => any;
 }
 type Actions = 'edit' | 'delete' | 'other';
 
@@ -25,6 +26,7 @@ export const ResponsiveTable = <T extends {}>({
     handlePage,
     page,
     loading,
+    action1,
 }: Props<T>) => {
     console.log({ count, elementsPerPage });
     return (
@@ -97,7 +99,10 @@ export const ResponsiveTable = <T extends {}>({
                                                             <button
                                                                 key="edit"
                                                                 className="text-blue-500 hover:text-blue-600"
-                                                                onClick={() => {}}
+                                                                onClick={() => {
+                                                                    if (typeof action1 !== 'function') return;
+                                                                    action1(element);
+                                                                }}
                                                             >
                                                                 <Edit size={18} />
                                                             </button>

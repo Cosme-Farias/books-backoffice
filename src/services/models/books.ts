@@ -17,6 +17,17 @@ const fetchBooks = async (): Promise<FetchBooksResponse> => {
 	}
 }
 
+const fetchBookById = async (id: string): Promise<Book> => {
+	try {
+		const response = await api.get<Book>(`${BOOKS_URL}/${id}`)
+		console.log(response)
+		return response.data
+	} catch (error) {
+		throw error
+	}
+}
+
+
 const createBook = async (book: Book): Promise<ApiResponse> => {
 	try {
 		const response = await api.post<ApiResponse>(BOOKS_URL,book)
@@ -43,5 +54,5 @@ const deleteBook = async (book: Book): Promise<ApiResponse> => {
 		throw error
 	}
 }
-export { createBook,deleteBook,fetchBooks,updateBook };
+export { createBook,deleteBook,fetchBookById,fetchBooks,updateBook };
 
